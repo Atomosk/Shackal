@@ -17,6 +17,8 @@ namespace Shackal.Gui.ViewModel
         private string _imagesFolder;
         private TimeSpan _roundDuration;
 
+        public DateTime RoundStartTime { get; set; }
+
         public AnimationTimeline Animation { get; set; }
 
         /// <summary>
@@ -117,9 +119,8 @@ namespace Shackal.Gui.ViewModel
         {
             if (Animation != null)
             {
-                var oldAnimation = Animation;
                 Animation = CreateAnimation();
-                Animation.BeginTime = oldAnimation.BeginTime;
+                Animation.BeginTime = -(DateTime.Now - RoundStartTime);
                 PixelateEffect.BeginAnimation(PixelateEffect.SizeInPixelsProperty, Animation);
             }
         }
@@ -146,6 +147,7 @@ namespace Shackal.Gui.ViewModel
         {
             var imageSource = new BitmapImage(new Uri(filePath));
             Animation = CreateAnimation();
+            RoundStartTime = DateTime.Now;
             PixelateEffect.BeginAnimation(PixelateEffect.SizeInPixelsProperty, Animation);
             Image = imageSource;
         }
@@ -192,7 +194,7 @@ namespace Shackal.Gui.ViewModel
             var mainWindow = MainWindow;
             if (mainWindow != null)
             {
-                mainWindow.SizeChanged -= MainWindowOnSizeChanged;
+                mainWindow.Image.SizeChanged -= OnImageSizeChanged;
             }
 
             MainWindow = null;
