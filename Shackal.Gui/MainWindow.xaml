@@ -18,9 +18,11 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Source="{Binding Image}" Effect="{Binding PixelateEffect}"></Image>
-        <Label Grid.Row="1" Grid.Column="0">Images location:</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ImagesFolder, Mode=TwoWay}"></TextBox>
-        <Button Grid.Row="1" Grid.Column="2" Command="{Binding NextRoundCommand}">Next</Button>
+        <Image Name="Image" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Source="{Binding Image}" Effect="{Binding PixelateEffect}"></Image>
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Images location:</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ImagesFolder, Mode=TwoWay}" VerticalAlignment="Center"></TextBox>
+        <Button Grid.Row="1" Grid.Column="2" Command="{Binding NextRoundCommand}" Padding="4">
+            <TextBlock Text="{Binding NextRoundText}"/>
+        </Button>
     </Grid>
 </Window>

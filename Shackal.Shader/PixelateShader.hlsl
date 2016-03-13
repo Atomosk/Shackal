@@ -15,7 +15,11 @@ static float2 PixelSize = 1.0 / PixelatedImageSize;
 
 float4 main(float2 uv : TEXCOORD) : SV_TARGET
 {
+    uv = uv - 0.5;
+
 	float2 uvPixelated = floor(uv * PixelatedImageSize) * PixelSize;
+
+    uvPixelated = uvPixelated + 0.5;
 	
 	float4 color = input.Sample(samplerState, uvPixelated);
 
