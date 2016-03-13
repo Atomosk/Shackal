@@ -10,11 +10,12 @@ SamplerState samplerState
 	AddressV = Wrap;
 };
 
+static float2 PixelatedImageSize = { PixelatedWidth, PixelatedHeight };
+static float2 PixelSize = 1.0 / PixelatedImageSize;
+
 float4 main(float2 uv : TEXCOORD) : SV_TARGET
 {
-	float2 pixelatedImageSize = { PixelatedWidth, PixelatedHeight };
-
-	float2 uvPixelated = floor(uv * pixelatedImageSize) / pixelatedImageSize;
+	float2 uvPixelated = floor(uv * PixelatedImageSize) * PixelSize;
 	
 	float4 color = input.Sample(samplerState, uvPixelated);
 

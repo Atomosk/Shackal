@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Shackal.Gui
+namespace Shackal.Gui.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

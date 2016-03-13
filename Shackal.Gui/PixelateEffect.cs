@@ -17,12 +17,22 @@ namespace Shackal.Gui
             DependencyProperty.Register("PixelatedHeight", typeof(double), typeof(PixelateEffect),
                 new UIPropertyMetadata(1.0, PixelShaderConstantCallback(1)));
 
-        public PixelateEffect()
+        public static readonly DependencyProperty SizeInPixelsProperty = DependencyProperty.Register(
+            "SizeInPixels", typeof (Size), typeof (PixelateEffect), new PropertyMetadata(default(Size), SizeInPixelsChanged));
+
+        /// <summary>
+        /// Property for animation, to make single animation for both width and height.
+        /// </summary>
+        public Size SizeInPixels
         {
-            this.PixelShader = ShackalShader.ShaderFactory.CreatePixelateEffect();
-            UpdateShaderValue(InputProperty);
-            UpdateShaderValue(PixelatedWidthProperty);
-            UpdateShaderValue(PixelatedHeightProperty);
+            get
+            {
+                return (Size)GetValue(SizeInPixelsProperty);
+            }
+            set
+            {
+                SetValue(SizeInPixelsProperty, value);
+            }
         }
 
         /// <summary>
@@ -71,5 +81,20 @@ namespace Shackal.Gui
             }
         }
 
+        public PixelateEffect()
+        {
+            this.PixelShader = ShackalShader.ShaderFactory.CreatePixelateEffect();
+            UpdateShaderValue(InputProperty);
+            UpdateShaderValue(PixelatedWidthProperty);
+            UpdateShaderValue(PixelatedHeightProperty);
+        }
+
+        private static void SizeInPixelsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var pixelateEffect = (PixelateEffect)d;
+            var size = (Size)e.NewValue;
+            pixelateEffect.PixelatedWidth = size.Width;
+            pixelateEffect.PixelatedHeight = size.Height;
+        }
     }
 }
