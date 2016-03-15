@@ -83,7 +83,10 @@ namespace Shackal.Gui
 
         public PixelateEffect()
         {
-            this.PixelShader = ShackalShader.ShaderFactory.CreatePixelateEffect();
+            var shaderStream =
+                typeof (PixelateEffect).Assembly.GetManifestResourceStream("Shackal.Gui.Effect.PixelateShader.hlsl.cso");
+            this.PixelShader = new PixelShader();
+            PixelShader.SetStreamSource(shaderStream);
             UpdateShaderValue(InputProperty);
             UpdateShaderValue(PixelatedWidthProperty);
             UpdateShaderValue(PixelatedHeightProperty);
